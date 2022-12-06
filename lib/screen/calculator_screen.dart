@@ -1,13 +1,20 @@
-import 'package:bloc_flutter_calculator/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:bloc_flutter_calculator/bloc/calculator/calculator_bloc.dart';
+import 'package:bloc_flutter_calculator/widgets/widgets.dart';
 
 class CalculatorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
+
+    final calculatorBloc = BlocProvider.of<CalculatorBloc>(context);
+
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
           margin: EdgeInsets.symmetric( horizontal: 10 ),
           child: Column(
             children: [
@@ -15,131 +22,127 @@ class CalculatorScreen extends StatelessWidget {
               Expanded(
                 child: Container(),
               ),
-
-              SubResult( text: '1000' ),
-              SubResult( text: 'X' ),
-              SubResult( text: '1000' ),
-              LineSeparator(),
-              MainResultText( text: '2000' ),
-
+    
+              ResultsLabels(),
+    
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CalculatorButton( 
                     text: 'AC',
                     bgColor: Color(0xffA5A5A5 ),
-                    onPressed: () => print('AC'),
+                    onPressed: () => calculatorBloc.add(ResetACEvent()),
                   ),
                   CalculatorButton( 
                     text: '+/-',
                     bgColor: Color(0xffA5A5A5 ),
-                    onPressed: () => print('+/-'),
+                    onPressed: () => calculatorBloc.add(ChangeNumberSignEvent()),
                   ),
                   CalculatorButton( 
                     text: 'del',
                     bgColor: Color(0xffA5A5A5 ),
-                    onPressed: () => print('del'),
+                    onPressed: () => calculatorBloc.add(DeleteLastNumberEvent()),
                   ),
                   CalculatorButton( 
                     text: '/',
                     bgColor: Color(0xffF0A23B ),
-                    onPressed: () => print('/'),
+                    onPressed: () => calculatorBloc.add(OperationEntryEvent("/")),
                   ),
                 ],
               ),
-
+    
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CalculatorButton( 
                     text: '7',
-                    onPressed: () => print('7'),
+                    onPressed: () => calculatorBloc.add(AddNumberEvent("7")),
                   ),
                   CalculatorButton( 
                     text: '8',
-                    onPressed: () => print('8'),
+                    onPressed: () => calculatorBloc.add(AddNumberEvent("8")),
                   ),
                   CalculatorButton( 
                     text: '9',
-                    onPressed: () => print('9'),
+                    onPressed: () => calculatorBloc.add(AddNumberEvent("9")),
                   ),
                   CalculatorButton( 
-                    text: 'X',
+                    text: 'x',
                     bgColor: Color(0xffF0A23B ),
-                    onPressed: () => print('X'),
+                    onPressed: () => calculatorBloc.add(OperationEntryEvent("x")),
                   ),
                 ],
               ),
-
+    
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CalculatorButton( 
                     text: '4', 
-                    onPressed: () => print('4'),
+                    onPressed: () => calculatorBloc.add(AddNumberEvent("4")),
                   ),
                   CalculatorButton( 
                     text: '5', 
-                    onPressed: () => print('5'),
+                    onPressed: () => calculatorBloc.add(AddNumberEvent("5")),
                   ),
                   CalculatorButton( 
                     text: '6', 
-                    onPressed: () => print('6'),
+                    onPressed: () => calculatorBloc.add(AddNumberEvent("6")),
                   ),
                   CalculatorButton( 
                     text: '-',
                     bgColor: Color(0xffF0A23B ),
-                    onPressed: () => print('-'),
+                    onPressed: () => calculatorBloc.add(OperationEntryEvent("-")),
                   ),
                 ],
               ),
-
+    
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CalculatorButton( 
                     text: '1', 
-                    onPressed: () => print('1'),
+                    onPressed: () => calculatorBloc.add(AddNumberEvent("1")),
                   ),
                   CalculatorButton( 
                     text: '2', 
-                    onPressed: () => print('2'),
+                    onPressed: () => calculatorBloc.add(AddNumberEvent("2")),
                   ),
                   CalculatorButton( 
                     text: '3', 
-                    onPressed: () => print('3'),
+                    onPressed: () => calculatorBloc.add(AddNumberEvent("3")),
                   ),
                   CalculatorButton(
                     text: '+',  
                     bgColor: Color(0xffF0A23B ),
-                    onPressed: () => print('+'),
+                    onPressed: () => calculatorBloc.add(OperationEntryEvent("+")),
                   ),
                 ],
               ),
-
+    
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CalculatorButton( 
                     text: '0', 
                     big: true,
-                    onPressed: () => print('0'),
+                    onPressed: () => calculatorBloc.add(AddNumberEvent("0")),
                   ),
                   CalculatorButton( 
                     text: '.', 
-                    onPressed: () => print('.'),
+                    onPressed: () => calculatorBloc.add(AddNumberEvent(".")),
                   ),
                   CalculatorButton( 
                     text: '=',
                     bgColor: Color(0xffF0A23B ),
-                    onPressed: () => print('='),
+                    onPressed: () => calculatorBloc.add(CalculateResultEvent()),
                   ),
                 ],
               ),
             ],
           ),
-        ),
-      )
-   );
+        )
+       ),
+    );
   }
 }
