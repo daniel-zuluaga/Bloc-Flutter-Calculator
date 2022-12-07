@@ -1,7 +1,23 @@
+import 'package:bloc_flutter_calculator/bloc/calculator/calculator_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_flutter_calculator/screen/calculator_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(const AppState());
+
+class AppState extends StatelessWidget {
+  const AppState({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CalculatorBloc>(create: (_) => CalculatorBloc())
+      ],
+      child: const MyApp()
+    );
+  }
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -10,6 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Material App',
+      debugShowCheckedModeBanner: false,
       home: CalculatorScreen(),
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black
